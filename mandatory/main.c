@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:25:06 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/24 13:27:29 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/24 14:24:12 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ int	main(int argc, char *argv[], char *env[])
 		return (end(EXIT_FAILURE, data));
 	
 	// TODO
+
+	// printf("input: %d, output: %d\n", data->infile_fd, data->outfile_fd);
+	// printf("path1: %s, path2: %s\n", data->cmd1->path, data->cmd2->path);
+	// int idx = 0;
+	// printf("cmd1: ");
+	// while ((data->cmd1->argv)[idx])
+	// 	printf("%s ", (data->cmd1->argv)[idx++]);
+	// printf("\n");
+	// idx = 0;
+	// printf("cmd2: ");
+	// while ((data->cmd2->argv)[idx])
+	// 	printf("%s ", (data->cmd2->argv)[idx++]);
+	// printf("\n");
 
 	return (end(EXIT_SUCCESS, data));
 }

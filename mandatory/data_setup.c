@@ -6,15 +6,15 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:21:23 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/24 13:30:09 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/24 14:22:12 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 static int			set_files(char *argv[], t_data *data);
-static t_command	*set_command(char *cmd_argv, char *env[]);
-static t_command	*create_command();
+static char			**set_paths(char *env[]);
+static t_command	*set_command(char *cmd_argv, char *paths[]);
 
 t_data	*create_data()
 {
@@ -35,28 +35,58 @@ int	set_data(char *argv[], char *env[], t_data *data)
 {
 	if (set_files(argv, data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	data->cmd1 = set_command(argv[1], env);
+	data->paths = set_paths(env);
+	if (!data->paths)
+		return (EXIT_FAILURE);
+	data->cmd1 = set_command(argv[2], data->paths);
 	if (!data->cmd1)
 		return (EXIT_FAILURE);
-	data->cmd2 = set_command(argv[4], env);
+	data->cmd2 = set_command(argv[3], data->paths);
 	if (!data->cmd1)
 		return (EXIT_FAILURE);
 	// TODO : pipe 함수 여기서 하는 거 맞을까?
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 static int	set_files(char *argv[], t_data *data)
 {
 	data->infile_fd = open(argv[1], O_RDONLY);
 	if (data->infile_fd == -1)
+	{
+		perror(argv[1]);
 		return (EXIT_FAILURE); // TODO: perror 해야 할까?
-	data->outfile_fd = open(argv[4], O_WRONLY); // 다른 인자들 필요 없을까?
+	}
+	data->outfile_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644); // TODO : 다른 인자들 필요 없을까?
 	if (data->outfile_fd == -1)
+	{
+		perror("pipex");
 		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
-static t_command	*set_command(char *cmd_argv, char *env[])
+static char	**set_paths(char *env[])
+{
+	int		idx;
+	char	*path_str;
+	char	**paths;
+
+	idx = 0;
+	while (env[idx])
+	{
+		if (ft_strncmp("PATH", env[idx], 4) == 0)
+			break;
+		idx++;
+	}
+	path_str = ft_substr(env[idx], 5, ft_strlen(env[idx]) - 5);
+	if (!path_str)
+		return (NULL);
+	paths = ft_split(path_str, ':');
+	free(path_str);
+	return (paths);
+}
+
+static t_command	*set_command(char *cmd_argv, char *paths[])
 {
 	t_command	*cmd;
 
@@ -68,22 +98,9 @@ static t_command	*set_command(char *cmd_argv, char *env[])
 		return (NULL);
 	if (cmd->argv[0][0] == '/')
 		cmd->path = ft_strdup(cmd->argv[0]);
-	// else TODO : get_command_path 구현하기
-	// 	cmd->path = get_command_path();
-	env = NULL;
+	else
+		cmd->path = get_command_path(cmd->argv[0], paths);
 	if (!cmd->path)
 		return (NULL);
-	return (cmd);
-}
-
-static t_command	*create_command()
-{
-	t_command	*cmd;
-
-	cmd = (t_command *)malloc(sizeof(t_command));
-	if (!cmd)
-		return (NULL);
-	cmd->path = NULL;
-	cmd->argv = NULL;
 	return (cmd);
 }

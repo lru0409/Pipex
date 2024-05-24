@@ -6,12 +6,14 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:23:49 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/24 13:24:42 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/24 14:16:08 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
+
+#include <stdio.h> // TODO : 안 쓰면 지우기
 
 # include "../libft/libft.h"
 # include <stdlib.h>
@@ -31,16 +33,19 @@ typedef struct s_data
 {
 	int			infile_fd;
 	int			outfile_fd;
+	char		**paths;
 	t_command	*cmd1;
 	t_command	*cmd2;
 	int			pipe[2];
 }	t_data;
 
 // data_setup
-t_data	*create_data();
-int		set_data(char *argv[], char *env[], t_data *data);
+t_data		*create_data();
+int			set_data(char *argv[], char *env[], t_data *data);
+t_command	*create_command();
+char		*get_command_path(char *command, char *paths[]);
 
 // data_clear
-void clear_data(t_data *data);
+void 		clear_data(t_data *data);
 
 #endif

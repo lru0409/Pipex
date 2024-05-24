@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:21:01 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/24 13:24:33 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/24 13:52:22 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void clear_data(t_data *data)
 		close(data->infile_fd);
 	if (data->outfile_fd != -1)
 		close(data->outfile_fd);
+	free_strs(data->paths);
 	if (data->cmd1)
 	{
 		free(data->cmd1->path);
