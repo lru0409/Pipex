@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:23:49 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/28 20:10:58 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/29 20:11:23 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ void 		clear_data(t_data *data);
 // execute
 void	execute_first_command(t_data *data, char *env[]);
 void	execute_second_command(t_data *data, char *env[]);
-void	wait_processes();
+int		wait_processes();
 
 #endif

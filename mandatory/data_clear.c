@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:21:01 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/29 20:01:46 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/29 20:26:05 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ void clear_data(t_data *data)
 		free_strs(data->cmd1->argv);
 		free(data->cmd1);
 	}
-	if (data->cmd1)
+	if (data->cmd2)
 	{
 		free(data->cmd2->path);
 		free_strs(data->cmd2->argv);
 		free(data->cmd2);
 	}
-	// TODO : pipe 닫기?
 }
 
 static void	free_strs(char **strs)
