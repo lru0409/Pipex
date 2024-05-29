@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:21:23 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/24 14:22:12 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/29 20:03:45 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	set_data(char *argv[], char *env[], t_data *data)
 	data->cmd2 = set_command(argv[3], data->paths);
 	if (!data->cmd1)
 		return (EXIT_FAILURE);
-	// TODO : pipe 함수 여기서 하는 거 맞을까?
+	if (pipe(data->pipe) == -1)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -56,7 +57,7 @@ static int	set_files(char *argv[], t_data *data)
 		perror(argv[1]);
 		return (EXIT_FAILURE); // TODO: perror 해야 할까?
 	}
-	data->outfile_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644); // TODO : 다른 인자들 필요 없을까?
+	data->outfile_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0444);
 	if (data->outfile_fd == -1)
 	{
 		perror("pipex");

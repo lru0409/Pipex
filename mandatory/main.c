@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:25:06 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/24 14:24:12 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/28 20:17:05 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ int	main(int argc, char *argv[], char *env[])
 	// while ((data->cmd2->argv)[idx])
 	// 	printf("%s ", (data->cmd2->argv)[idx++]);
 	// printf("\n");
+
+	execute_first_command(data, env);
+	execute_second_command(data, env);
+	wait_processes();
 
 	return (end(EXIT_SUCCESS, data));
 }
