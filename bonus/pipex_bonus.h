@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/24 12:23:49 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 21:14:43 by rolee            ###   ########.fr       */
+/*   Created: 2024/05/30 12:14:11 by rolee             #+#    #+#             */
+/*   Updated: 2024/05/30 21:45:03 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include "../libft/libft.h"
 # include <stdlib.h>
@@ -22,34 +22,42 @@
 # define WRITE_END 1
 # define READ_END 0
 
+# define TRUE 1
+# define FALSE 0
+
+# define HEREDOC "here_doc"
+# define TEMP_FILE "tempfile"
+
 typedef struct s_command
 {
-	char	*path;
-	char	**argv;
+	char					*path;
+	char					**argv;
+	struct s_command		*next;
 }	t_command;
 
 typedef struct s_data
 {
 	int			infile_fd;
 	int			outfile_fd;
+	int			is_heredoc;
 	char		**paths;
-	t_command	*cmd1;
-	t_command	*cmd2;
-	int			pipe[2];
+	int			command_count;
+	// TODO
+	t_command	*command_list;
+	int			**pipe;
 }	t_data;
 
+// manage_heredoc
+int			manage_heredoc(char *argv[], t_data *data);
+
 // data_setup
-int			set_data(char *argv[], char *env[], t_data *data);
-t_command	*create_command(void);
-char		*get_command_path(char *command, char *paths[]);
+int			set_data(int argc, char *argv[], char *env[], t_data *data);
+t_command	*set_command(char *cmd_argv, char *paths[]);
+void		add_command(t_command **command_list, t_command *new);
+
 
 // data_clear
 void		clear_data(t_data *data);
 void		free_strs(char **strs);
-
-// execute
-void		execute_first_command(t_data *data, char *env[]);
-void		execute_second_command(t_data *data, char *env[]);
-int			wait_processes(void);
 
 #endif

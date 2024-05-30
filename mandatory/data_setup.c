@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:21:23 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 12:09:37 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/30 21:26:07 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,6 @@
 static int			set_files(char *argv[], t_data *data);
 static char			**set_paths(char *env[]);
 static t_command	*set_command(char *cmd_argv, char *paths[]);
-
-t_data	*create_data(void)
-{
-	t_data	*data;
-
-	data = (t_data *)malloc(sizeof(t_data));
-	if (!data)
-		return (NULL);
-	data->infile_fd = -1;
-	data->outfile_fd = -1;
-	data->cmd1 = NULL;
-	data->cmd2 = NULL;
-	return (data);
-}
 
 int	set_data(char *argv[], char *env[], t_data *data)
 {

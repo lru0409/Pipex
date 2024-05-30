@@ -1,5 +1,4 @@
-MANDATORY_NAME = pipex
-# BONUS_NAME = checker
+NAME = pipex
 
 MANDATORY_SRCS = $(wildcard mandatory/*.c)
 BONUS_SRCS = $(wildcard bonus/*.c)
@@ -11,10 +10,8 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror
 
 ifdef BONUS
-	NAME = $(BONUS_NAME)
 	OBJS = $(BONUS_OBJS)
 else
-	NAME = $(MANDATORY_NAME)
 	OBJS = $(MANDATORY_OBJS)
 endif
 
@@ -36,7 +33,7 @@ clean :
 
 fclean : clean
 	make -C libft fclean
-	rm -f $(MANDATORY_NAME) $(BONUS_NAME)
+	rm -f $(NAME)
 
 re : fclean all
 

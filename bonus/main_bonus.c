@@ -1,49 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/24 12:25:06 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 21:15:06 by rolee            ###   ########.fr       */
+/*   Created: 2024/05/30 12:16:58 by rolee             #+#    #+#             */
+/*   Updated: 2024/05/30 21:45:20 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-static int		check_argc(int argc);
 static t_data	*create_data(void);
+static int		check_argc(int argc, int is_heredoc);
 static int		end(int ret, t_data *data);
 
 int	main(int argc, char *argv[], char *env[])
 {
-	t_data	*data;
+	t_data *data;
 
-	if (check_argc(argc) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	env = NULL;
 	data = create_data();
-	if (!data)
-		return (EXIT_FAILURE);
-	if (set_data(argv, env, data) == EXIT_FAILURE)
+	if (manage_heredoc(argv, data) == EXIT_FAILURE)
 		return (end(EXIT_FAILURE, data));
-	execute_first_command(data, env);
-	execute_second_command(data, env);
-	if (wait_processes() == EXIT_FAILURE)
+	if (check_argc(argc, data->is_heredoc) == EXIT_FAILURE)
 		return (end(EXIT_FAILURE, data));
+
 	return (end(EXIT_SUCCESS, data));
 }
 
-static int	check_argc(int argc)
-{
-	if (argc != 5)
-	{
-		ft_putendl_fd("Invalid Argument.", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
-
+// TODO : create_data -> init_data
 static t_data	*create_data(void)
 {
 	t_data	*data;
@@ -53,14 +40,27 @@ static t_data	*create_data(void)
 		return (NULL);
 	data->infile_fd = -1;
 	data->outfile_fd = -1;
+	data->is_heredoc = FALSE;
 	data->paths = NULL;
-	data->cmd1 = NULL;
-	data->cmd2 = NULL;
+	data->command_count = 0;
+	data->command_list = NULL;
+	data->pipe = NULL;
 	return (data);
+}
+
+static int	check_argc(int argc, int is_heredoc)
+{
+	if ((is_heredoc && argc < 5) || (!is_heredoc && argc < 4))
+	{
+		ft_putendl_fd("Invalid Argument.", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
 static int	end(int ret, t_data *data)
 {
+	data = NULL;
 	clear_data(data);
 	return (ret);
 }
