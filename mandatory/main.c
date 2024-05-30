@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:25:06 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/29 20:48:36 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/30 12:11:01 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	end(int ret, t_data *data);
 
 int	main(int argc, char *argv[], char *env[])
 {
-	t_data *data;
+	t_data	*data;
 
 	if (argc != 5)
 	{
@@ -32,7 +32,6 @@ int	main(int argc, char *argv[], char *env[])
 	execute_second_command(data, env);
 	if (wait_processes() == EXIT_FAILURE)
 		return (end(EXIT_FAILURE, data));
-
 	return (end(EXIT_SUCCESS, data));
 }
 

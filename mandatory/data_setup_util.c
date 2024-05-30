@@ -6,13 +6,13 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:24:51 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/24 14:21:40 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/30 12:03:04 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_command	*create_command()
+t_command	*create_command(void)
 {
 	t_command	*cmd;
 
@@ -43,7 +43,7 @@ char	*get_command_path(char *command, char *paths[])
 {
 	int		idx;
 	char	*command_path;
-	
+
 	idx = 0;
 	while (paths[idx])
 	{

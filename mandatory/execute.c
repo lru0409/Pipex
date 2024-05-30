@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:57:09 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/29 22:06:38 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/30 11:59:57 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	execute_second_command(t_data *data, char *env[])
 	close(data->pipe[READ_END]);
 }
 
-int	wait_processes()
+int	wait_processes(void)
 {
 	int	count;
 	int	wait_pid;

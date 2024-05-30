@@ -6,15 +6,13 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:21:01 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/29 20:26:05 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/30 12:09:21 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	free_strs(char **strs);
-
-void clear_data(t_data *data)
+void	clear_data(t_data *data)
 {
 	if (!data)
 		return ;
@@ -35,9 +33,10 @@ void clear_data(t_data *data)
 		free_strs(data->cmd2->argv);
 		free(data->cmd2);
 	}
+	free(data);
 }
 
-static void	free_strs(char **strs)
+void	free_strs(char **strs)
 {
 	int	idx;
 

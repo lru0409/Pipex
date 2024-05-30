@@ -6,19 +6,18 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:23:49 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/29 20:11:23 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/30 12:09:27 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-#include <stdio.h> // TODO : 안 쓰면 지우기
-
 # include "../libft/libft.h"
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <stdio.h>
 
 # define WRITE_END 1
 # define READ_END 0
@@ -40,17 +39,18 @@ typedef struct s_data
 }	t_data;
 
 // data_setup
-t_data		*create_data();
+t_data		*create_data(void);
 int			set_data(char *argv[], char *env[], t_data *data);
-t_command	*create_command();
+t_command	*create_command(void);
 char		*get_command_path(char *command, char *paths[]);
 
 // data_clear
-void 		clear_data(t_data *data);
+void		clear_data(t_data *data);
+void		free_strs(char **strs);
 
 // execute
-void	execute_first_command(t_data *data, char *env[]);
-void	execute_second_command(t_data *data, char *env[]);
-int		wait_processes();
+void		execute_first_command(t_data *data, char *env[]);
+void		execute_second_command(t_data *data, char *env[]);
+int			wait_processes(void);
 
 #endif

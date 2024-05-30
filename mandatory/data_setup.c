@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:21:23 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/29 20:26:38 by rolee            ###   ########.fr       */
+/*   Updated: 2024/05/30 12:09:37 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int			set_files(char *argv[], t_data *data);
 static char			**set_paths(char *env[]);
 static t_command	*set_command(char *cmd_argv, char *paths[]);
 
-t_data	*create_data()
+t_data	*create_data(void)
 {
 	t_data	*data;
 
@@ -75,7 +75,7 @@ static char	**set_paths(char *env[])
 	while (env[idx])
 	{
 		if (ft_strncmp("PATH", env[idx], 4) == 0)
-			break;
+			break ;
 		idx++;
 	}
 	path_str = ft_substr(env[idx], 5, ft_strlen(env[idx]) - 5);
@@ -100,7 +100,10 @@ static t_command	*set_command(char *cmd_argv, char *paths[])
 		cmd->path = ft_strdup(cmd->argv[0]);
 	else
 		cmd->path = get_command_path(cmd->argv[0], paths);
-	if (!cmd->path)
+	if (!cmd->path) {
+		free_strs(cmd->argv);
+		free(cmd);
 		return (NULL);
+	}
 	return (cmd);
 }
