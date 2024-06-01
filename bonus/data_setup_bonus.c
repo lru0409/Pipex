@@ -55,7 +55,7 @@ static int	set_files(int argc, char *argv[], t_data *data)
 		perror(argv[argc-1]);
 		return (EXIT_FAILURE);
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 static char	**set_paths(char *env[])
@@ -82,15 +82,17 @@ static char	**set_paths(char *env[])
 static int	set_command_list(int argc, char *argv[], char *paths[], t_data *data)
 {
 	int			index;
+	int			offset;
 	t_command	*command;
 
-	index = 2;
+	offset = 2;
 	if (data->is_heredoc)
-		index = 3;
-	data->command_count = argc - index - 1;
-	while (index < index + data->command_count)
+		offset = 3;
+	data->command_count = argc - offset - 1;
+	index = 0;
+	while (index < data->command_count)
 	{
-		command = set_command(argv[index], paths);
+		command = set_command(argv[index + offset], paths);
 		if (!command)
 			return (EXIT_FAILURE);
 		add_command(&data->command_list, command);
