@@ -28,6 +28,9 @@
 # define HEREDOC "here_doc"
 # define TEMP_FILE "tempfile"
 
+# define CHILD 0
+# define PARENT 1
+
 typedef struct s_command
 {
 	char					*path;
@@ -55,9 +58,12 @@ int			set_data(int argc, char *argv[], char *env[], t_data *data);
 t_command	*set_command(char *cmd_argv, char *paths[]);
 void		add_command(t_command **command_list, t_command *new);
 
-
 // data_clear
 void		clear_data(t_data *data);
 void		free_strs(char **strs);
+
+// execute
+void 		execute_commands(t_data *data, char *env[]);
+int 		wait_processes(t_data *data);
 
 #endif
