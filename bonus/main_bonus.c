@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:16:58 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 21:45:20 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/02 20:58:01 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int	main(int argc, char *argv[], char *env[])
 	if (check_argc(argc, data->is_heredoc) == EXIT_FAILURE)
 		return (end(EXIT_FAILURE, data));
 	if (set_data(argc, argv, env, data) == EXIT_FAILURE)
+		return (end(EXIT_FAILURE, data));
+	execute_commands(data, env);
+	if (wait_processes(data) == EXIT_FAILURE)
 		return (end(EXIT_FAILURE, data));
 	
 	// printf("infile: %i, outfile: %i\n", data->infile_fd, data->outfile_fd);
