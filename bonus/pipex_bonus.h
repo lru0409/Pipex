@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:14:11 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 21:45:03 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/05 19:26:13 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_data
 	int			is_heredoc;
 	char		**paths;
 	int			command_count;
-	// TODO
 	t_command	*command_list;
 	int			**pipe;
 }	t_data;
@@ -63,7 +62,7 @@ void		clear_data(t_data *data);
 void		free_strs(char **strs);
 
 // execute
-void 		execute_commands(t_data *data, char *env[]);
-int 		wait_processes(t_data *data);
+void		execute_commands(t_data *data, char *env[]);
+int			wait_processes(t_data *data);
 
 #endif

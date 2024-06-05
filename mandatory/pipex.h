@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:23:49 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 21:14:43 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/05 19:27:45 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_data
 
 // data_setup
 int			set_data(char *argv[], char *env[], t_data *data);
-t_command	*create_command(void);
+t_command	*init_command(void);
 char		*get_command_path(char *command, char *paths[]);
 
 // data_clear

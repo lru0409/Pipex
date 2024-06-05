@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:43:40 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 21:44:47 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/05 19:28:46 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,22 @@ static int	get_heredoc_input(char *limiter)
 	{
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
-			break;
+			break ;
 		if (is_same(line, limiter))
-			break;
+			break ;
 		ft_putstr_fd(line, tempfile);
 		free(line);
 	}
-	free(line); // TODO : 여기도 해도 되나?
+	free(line);
 	close(tempfile);
 	return (EXIT_SUCCESS);
 }
 
 static int	is_same(char *line, char *limiter)
 {
-	int	limiter_len = ft_strlen(limiter);
+	int	limiter_len;
+
+	limiter_len = ft_strlen(limiter);
 	if (ft_strncmp(line, limiter, limiter_len) != 0)
 		return (FALSE);
 	if (line[limiter_len] != '\n')

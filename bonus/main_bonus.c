@@ -6,28 +6,21 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:16:58 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/02 20:58:01 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/05 19:34:01 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static t_data	*create_data(void);
+static t_data	*init_data(void);
 static int		check_argc(int argc, int is_heredoc);
 static int		end(int ret, t_data *data);
 
-// void leaks()
-// {
-// 	system("leaks pipex");
-// }
-
 int	main(int argc, char *argv[], char *env[])
 {
-	t_data *data;
+	t_data	*data;
 
-	// atexit(leaks);
-
-	data = create_data();
+	data = init_data();
 	if (manage_heredoc(argv, data) == EXIT_FAILURE)
 		return (end(EXIT_FAILURE, data));
 	if (check_argc(argc, data->is_heredoc) == EXIT_FAILURE)
@@ -37,26 +30,10 @@ int	main(int argc, char *argv[], char *env[])
 	execute_commands(data, env);
 	if (wait_processes(data) == EXIT_FAILURE)
 		return (end(EXIT_FAILURE, data));
-	
-	// printf("infile: %i, outfile: %i\n", data->infile_fd, data->outfile_fd);
-	// printf("is_heredoc: %i, cmd_count: %i\n", data->is_heredoc, data->command_count);
-	// printf("---command_list---\n");
-	// t_command *current = data->command_list;
-	// while (current)
-	// {
-	// 	printf("%s / ", current->path);
-	// 	int i = 0;
-	// 	while (current->argv[i])
-	// 		printf("%s ", current->argv[i++]);
-	// 	printf("\n");
-	// 	current = current->next;
-	// }
-
 	return (end(EXIT_SUCCESS, data));
 }
 
-// TODO : create_data -> init_data
-static t_data	*create_data(void)
+static t_data	*init_data(void)
 {
 	t_data	*data;
 

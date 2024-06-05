@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:21:23 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 21:26:07 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/05 19:27:45 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static t_command	*set_command(char *cmd_argv, char *paths[])
 {
 	t_command	*cmd;
 
-	cmd = create_command();
+	cmd = init_command();
 	if (!cmd)
 		return (NULL);
 	cmd->argv = ft_split(cmd_argv, ' ');
@@ -86,7 +86,8 @@ static t_command	*set_command(char *cmd_argv, char *paths[])
 		cmd->path = ft_strdup(cmd->argv[0]);
 	else
 		cmd->path = get_command_path(cmd->argv[0], paths);
-	if (!cmd->path) {
+	if (!cmd->path)
+	{
 		free_strs(cmd->argv);
 		free(cmd);
 		return (NULL);

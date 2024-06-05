@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:21:01 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 21:42:40 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/05 19:25:52 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	free_command_list(t_command *command_list)
 {
 	t_command	*current;
 	t_command	*prev;
-	
+
 	current = command_list;
 	while (current)
 	{
@@ -59,7 +59,7 @@ static void	free_pipe(int **pipe, int count)
 	while (index < count)
 	{
 		if (!pipe[index])
-			break;
+			break ;
 		if (pipe[index][READ_END] == -1)
 			close(pipe[index][READ_END]);
 		if (pipe[index][WRITE_END] == -1)

@@ -6,14 +6,14 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:25:06 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 21:15:06 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/05 19:27:31 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 static int		check_argc(int argc);
-static t_data	*create_data(void);
+static t_data	*init_data(void);
 static int		end(int ret, t_data *data);
 
 int	main(int argc, char *argv[], char *env[])
@@ -22,7 +22,7 @@ int	main(int argc, char *argv[], char *env[])
 
 	if (check_argc(argc) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	data = create_data();
+	data = init_data();
 	if (!data)
 		return (EXIT_FAILURE);
 	if (set_data(argv, env, data) == EXIT_FAILURE)
@@ -44,7 +44,7 @@ static int	check_argc(int argc)
 	return (EXIT_SUCCESS);
 }
 
-static t_data	*create_data(void)
+static t_data	*init_data(void)
 {
 	t_data	*data;
 

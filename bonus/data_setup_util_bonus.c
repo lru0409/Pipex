@@ -6,13 +6,13 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:11:51 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 21:16:44 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/05 19:27:45 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static t_command	*create_command(void);
+static t_command	*init_command(void);
 static char			*get_command_path(char *command, char *paths[]);
 static char			*join_path(char *path, char *command);
 
@@ -20,17 +20,18 @@ t_command	*set_command(char *cmd_argv, char *paths[])
 {
 	t_command	*cmd;
 
-	cmd = create_command();
+	cmd = init_command();
 	if (!cmd)
 		return (NULL);
 	cmd->argv = ft_split(cmd_argv, ' ');
-	if (!cmd->argv) // TODO : cmd->argv[0] = NULL 인 경우가 있나?
+	if (!cmd->argv)
 		return (NULL);
 	if (cmd->argv[0][0] == '/')
 		cmd->path = ft_strdup(cmd->argv[0]);
 	else
 		cmd->path = get_command_path(cmd->argv[0], paths);
-	if (!cmd->path) {
+	if (!cmd->path)
+	{
 		free_strs(cmd->argv);
 		free(cmd);
 		return (NULL);
@@ -40,7 +41,7 @@ t_command	*set_command(char *cmd_argv, char *paths[])
 
 void	add_command(t_command **command_list, t_command *new)
 {
-	t_command *current;
+	t_command	*current;
 
 	if (*command_list == NULL)
 	{
@@ -53,7 +54,7 @@ void	add_command(t_command **command_list, t_command *new)
 	current->next = new;
 }
 
-static t_command	*create_command(void)
+static t_command	*init_command(void)
 {
 	t_command	*cmd;
 

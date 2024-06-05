@@ -6,20 +6,20 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:05:01 by lru0409           #+#    #+#             */
-/*   Updated: 2024/06/02 21:44:53 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/05 19:28:53 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static void    close_pipe(int process, int count, t_data *data);
-static void    set_redirection(int count, t_data *data);
+static void	close_pipe(int process, int count, t_data *data);
+static void	set_redirection(int count, t_data *data);
 
-void execute_commands(t_data *data, char *env[])
+void	execute_commands(t_data *data, char *env[])
 {
-	t_command   *cmd;
-	int         count;
-	int         pid;
+	t_command	*cmd;
+	int			count;
+	int			pid;
 
 	cmd = data->command_list;
 	count = 0;
@@ -39,7 +39,7 @@ void execute_commands(t_data *data, char *env[])
 	}
 }
 
-static void    set_redirection(int count, t_data *data)
+static void	set_redirection(int count, t_data *data)
 {
 	if (count == 0)
 		dup2(data->infile_fd, STDIN_FILENO);
@@ -51,7 +51,7 @@ static void    set_redirection(int count, t_data *data)
 		dup2(data->pipe[count][WRITE_END], STDOUT_FILENO);
 }
 
-static void    close_pipe(int process, int count, t_data *data)
+static void	close_pipe(int process, int count, t_data *data)
 {
 	int	index;
 
@@ -76,17 +76,17 @@ static void    close_pipe(int process, int count, t_data *data)
 	}
 }
 
-int wait_processes(t_data *data)
+int	wait_processes(t_data *data)
 {
-	int count;
-	int wait_pid;
-	int status;
+	int	count;
+	int	wait_pid;
+	int	status;
 
 	count = 0;
 	while (count < data->command_count)
 	{
 		wait_pid = wait(&status);
-		if (wait_pid == -1) // TODO: dup2, wait, pipe .. 어디까지 실패 처리를 해줘야 할까?
+		if (wait_pid == -1)
 		{
 			perror("wait");
 			return (EXIT_FAILURE);

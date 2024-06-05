@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:22:45 by rolee             #+#    #+#             */
-/*   Updated: 2024/05/30 21:37:35 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/05 19:25:37 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static int	set_files(int argc, char *argv[], t_data *data);
 static char	**set_paths(char *env[]);
-static int	set_command_list(int argc, char *argv[], char *paths[], t_data *data);
+static int	set_command_list(int argc, char *argv[], \
+								char *paths[], t_data *data);
 static int	set_pipe(t_data *data);
 
 int	set_data(int argc, char *argv[], char *env[], t_data *data)
@@ -34,14 +35,14 @@ int	set_data(int argc, char *argv[], char *env[], t_data *data)
 static int	set_files(int argc, char *argv[], t_data *data)
 {
 	char	*infile_name;
-	int		outfile_flag;
+	int		oflag;
 
 	infile_name = argv[1];
-	outfile_flag = O_TRUNC;
+	oflag = O_TRUNC;
 	if (data->is_heredoc)
 	{
 		infile_name = TEMP_FILE;
-		outfile_flag = O_APPEND;
+		oflag = O_APPEND;
 	}
 	data->infile_fd = open(infile_name, O_RDONLY);
 	if (data->infile_fd == -1)
@@ -49,10 +50,10 @@ static int	set_files(int argc, char *argv[], t_data *data)
 		perror(infile_name);
 		return (EXIT_FAILURE);
 	}
-	data->outfile_fd = open(argv[argc-1], O_WRONLY | O_CREAT | outfile_flag, 0644);
+	data->outfile_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | oflag, 0644);
 	if (data->outfile_fd == -1)
 	{
-		perror(argv[argc-1]);
+		perror(argv[argc - 1]);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -79,7 +80,8 @@ static char	**set_paths(char *env[])
 	return (paths);
 }
 
-static int	set_command_list(int argc, char *argv[], char *paths[], t_data *data)
+static int	set_command_list(int argc, char *argv[], \
+								char *paths[], t_data *data)
 {
 	int			index;
 	int			offset;
@@ -108,14 +110,14 @@ static int	set_pipe(t_data *data)
 	data->pipe = (int **)malloc(sizeof(int *) * (data->command_count - 1));
 	if (!data->pipe)
 		return (EXIT_FAILURE);
-	ft_memset(data->pipe, 0, sizeof(int *) * (data->command_count - 1)); // TODO : NULL 초기화 되나?
+	ft_memset(data->pipe, 0, sizeof(int *) * (data->command_count - 1));
 	index = 0;
 	while (index < data->command_count - 1)
 	{
 		data->pipe[index] = (int *)malloc(sizeof(int) * 2);
 		if (!data->pipe[index])
-			return (EXIT_FAILURE); // TODO : 메모리 누수 없을지 보자
-		ft_memset(data->pipe[index], -1, sizeof(int) * 2); // TODO : -1로 초기화되나?
+			return (EXIT_FAILURE);
+		ft_memset(data->pipe[index], -1, sizeof(int) * 2);
 		if (pipe(data->pipe[index]) == -1)
 			return (EXIT_FAILURE);
 		index++;
